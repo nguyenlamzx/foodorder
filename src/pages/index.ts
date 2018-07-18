@@ -1,3 +1,5 @@
+import toArray from "lodash/toArray";
+
 export const pages = {
   tutorial: { title: 'Tutorial', component: 'TutorialPage' },
   welcome: { title: 'Welcome', component: 'WelcomePage' },
@@ -12,14 +14,16 @@ export const pages = {
   search: { title: 'Search', component: 'SearchPage' }
 };
 
+export const pagesAsArray = toArray(pages);
+
 // The page the user lands on after opening the app and without a session
-export const FirstRunPage = pages.tutorial;
+export const FirstRunPage = pages.tutorial.component;
 
 // The main page the user will see as they use the app over a long period of time.
 // Change this if not using tabs
-export const MainPage = pages.tabs;
+export const MainPage = pages.tabs.component;
 
 // The initial root pages for our tabs (remove if not using tabs)
-export const Tab1Root = pages.master;
-export const Tab2Root = pages.search;
-export const Tab3Root = pages.settings;
+export const Tab1Root = pages.master.component;
+export const Tab2Root = pages.search.component;
+export const Tab3Root = pages.settings.component;

@@ -4,10 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform } from 'ionic-angular';
 
-import { FirstRunPage, pages } from '../pages';
+import { FirstRunPage, pagesAsArray } from '../pages';
 import { Settings } from '../providers';
-
-import toArray from "lodash/toArray";
 
 @Component({
   templateUrl: './app.component.html'
@@ -17,7 +15,7 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any = toArray(pages);
+  pages: any[] = pagesAsArray;
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
