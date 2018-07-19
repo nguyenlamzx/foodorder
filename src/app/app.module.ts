@@ -8,6 +8,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
 
 import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
@@ -60,6 +61,7 @@ export function provideSettings(storage: Storage) {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     LoginPageModule,
+    NgxErrorsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

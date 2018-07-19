@@ -10,9 +10,12 @@
 <ion-content>
   <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
   </div>
-
+  <button ion-button icon-only clear (click)="doFavorite()">
+    <ion-icon name="heart"></ion-icon>
+    {{ item.vote }}
+  </button>
   <div class="item-detail" padding>
-    <h2>{{item.name}}</h2>
-    <p>{{item.about}}</p>
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.about }}</p>
   </div>
 </ion-content>

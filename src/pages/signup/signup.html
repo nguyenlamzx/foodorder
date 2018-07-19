@@ -22,6 +22,7 @@
       </ion-item>
 
       <div padding>
+        <div class="form-error">{{ signupError }}</div>
         <button ion-button color="primary" block type="submit" [disabled]="!form.valid">{{ 'SIGNUP_BUTTON' | translate }}</button>
       </div>
 

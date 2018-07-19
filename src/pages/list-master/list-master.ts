@@ -1,64 +1,97 @@
-import { Observable } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, AfterContentInit, OnInit, AfterViewChecked, AfterContentChecked, OnChanges, DoCheck, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-
-// import { Item } from '../../models/item';
-// import { Items } from '../../providers';
+import { Item } from '../../models/item';
+import { Items } from '../../providers';
+import { Subscription, Observable } from 'rxjs';
 
 @IonicPage()
 @Component({
   selector: 'page-list-master',
   templateUrl: 'list-master.html'
 })
-export class ListMasterPage {
+export class ListMasterPage implements 
+OnChanges, OnInit, DoCheck,
+AfterContentInit, AfterContentChecked,
+AfterViewInit, AfterViewChecked,
+OnDestroy {
 
-  public items: Observable<any[]>;
+  ngOnInit(): void {
+    console.log("ListMasterPage ngOnInit");
+  }
+  ngAfterContentInit(): void {
+    console.log("ListMasterPage ngAfterContentInit");
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("ListMasterPage  ngOnChanges");
+  }
+  ngDoCheck(): void {
+    console.log("ListMasterPage ngDoCheck");
+  }
+  ngAfterContentChecked(): void {
+    console.log("ListMasterPage ngAfterContentChecked");
+  }
+  ngAfterViewInit(): void {
+    console.log("ListMasterPage ngAfterViewInit");
+  }
+  ngAfterViewChecked(): void {
+    console.log("ListMasterPage ngAfterViewChecked");
+  }
+  ngOnDestroy(): void {
+    console.log("ListMasterPage ngOnDestroy");
+  }
+  public currentItems: Item[];
+
+  private itemsObservable: Observable<Item[]>;
+  private itemsObserver: Subscription;
   
   constructor(
     public navCtrl: NavController, 
     public modalCtrl: ModalController,
-    public db: AngularFireDatabase,
+    public items: Items,
   ) {
-    // this.currentItems = this.items.query();
+    this.itemsObservable = this.items.query();
   }
 
   /**
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
-    this.items = this.db.list('products').valueChanges();
+    this.itemsObserver = this.itemsObservable.subscribe(items => {
+      this.currentItems = items;
+    });
   }
 
-  /**
-   * Prompt the user to add a new item. This shows our ItemCreatePage in a
-   * modal and then adds the new item to our data source if the user created one.
-   */
-  // addItem() {
-  //   let addModal = this.modalCtrl.create('ItemCreatePage');
-  //   addModal.onDidDismiss(item => {
-  //     if (item) {
-  //       this.items.add(item);
-  //     }
-  //   })
-  //   addModal.present();
-  // }
+  onFilter() {
+    // this.itemsObserver.unsubscribe();
+    // this.itemsObserver = this.items.query({}).subscribe(items => {
+    //   this.currentItems = items;
+    // });
+  }
 
-  /**
-   * Delete an item from the list of items.
-   */
-  // deleteItem(item) {
-  //   this.items.delete(item);
-  // }
+  ionViewWillUnload(){
+    this.itemsObserver.unsubscribe();
+  }
 
-  /**
-   * Navigate to the detail page for this item.
-   */
-  // openItem(item: Item) {
-  //   this.navCtrl.push('ItemDetailPage', {
-  //     item: item
-  //   });
-  // }
+  addItem() {
+    let addModal = this.modalCtrl.create('ItemCreatePage');
+
+    addModal.onDidDismiss(item => {
+      if(item) {
+        this.items.add(item);
+      }
+    });
+    addModal.present();
+  }
+
+  deleteItem(item) {
+    this.items.delete(item);
+  }
+
+  viewItem(item: Item) {
+    this.navCtrl.push('ItemDetailPage', {
+      item,
+    })
+  }
+
 }
