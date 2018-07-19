@@ -8,6 +8,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
 
 import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
@@ -17,6 +18,7 @@ import { firebaseConfig } from '@app/env';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { LoginPageModule } from '../pages/login/login.module';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -58,6 +60,8 @@ export function provideSettings(storage: Storage) {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    LoginPageModule,
+    NgxErrorsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
