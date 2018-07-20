@@ -26,4 +26,8 @@ export class User {
       credentials.email,
       credentials.password);
   }
+
+  signOut(): Promise<void> {
+    return this.afAuth.auth.signOut();
+  }
 }

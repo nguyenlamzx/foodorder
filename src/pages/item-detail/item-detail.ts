@@ -54,7 +54,6 @@ export class ItemDetailPage implements
   doFavorite() {
     const { id: itemID, vote } = this.item;
     this.items.update(itemID, { vote: vote + 1 });
-    console.log()
   }
 
 }

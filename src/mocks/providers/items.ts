@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { Item } from '../../models/item';
@@ -8,6 +9,8 @@ import uuid from "uuid/v1";
 @Injectable()
 export class Items {
 
+  private items$: Observable<any[]>;
+  private name$: BehaviorSubject<string|null>;
   private items: Item[] = [];
 
   public defaultItem: any = {
@@ -74,6 +77,13 @@ export class Items {
     for (let item of items) {
       this.items.push(new Item(item));
     }
+
+    this.name$ = new BehaviorSubject("");
+    this.items$ = this.name$.pipe(
+      switchMap(
+        name => this.query({ name })
+      )
+    );
   }
 
   /**
@@ -99,6 +109,14 @@ export class Items {
         return null;
       }));
     });
+  }
+
+  queryForSearch() {
+    return this.items$;
+  }
+
+  search(name):any {
+    this.name$.next(name);
   }
 
   update(itemID, data) {
