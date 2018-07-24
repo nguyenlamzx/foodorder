@@ -1,3 +1,4 @@
+import { uuid } from 'uuid/v1';
 /**
  * A generic model that our Master-Detail pages list, create, and delete.
  *
@@ -22,3 +23,12 @@ export class Item {
 export interface Item {
   [prop: string]: any;
 }
+
+
+export const DEFAULT:Item = {
+  "id": uuid(),
+  "name": "Burt Bear",
+  "profilePic": "assets/img/speakers/bear.jpg",
+  "about": "Burt is a Bear.",
+  "vote": 0,
+};

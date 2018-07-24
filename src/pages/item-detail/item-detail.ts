@@ -1,3 +1,4 @@
+import { DEFAULT } from './../../models/item';
 import { Component, AfterContentInit, OnInit, AfterViewChecked, AfterContentChecked, OnChanges, DoCheck, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -8,11 +9,7 @@ import { Items } from '../../providers';
   selector: 'page-item-detail',
   templateUrl: 'item-detail.html'
 })
-export class ItemDetailPage implements 
-  OnChanges, OnInit, DoCheck,
-  AfterContentInit, AfterContentChecked,
-  AfterViewInit, AfterViewChecked,
-  OnDestroy {
+export class ItemDetailPage {
 
   item: any;
 
@@ -21,35 +18,8 @@ export class ItemDetailPage implements
     private items: Items,
     navParams: NavParams,
   ) {
-    this.item = navParams.get('item') || items.defaultItem;
+    this.item = navParams.get('item') || DEFAULT;
   }
-
-
-  ngOnInit(): void {
-    console.log("ItemDetailPage ngOnInit");
-  }
-  ngAfterContentInit(): void {
-    console.log("ItemDetailPage ngAfterContentInit");
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("ItemDetailPage  ngOnChanges");
-  }
-  ngDoCheck(): void {
-    console.log("ItemDetailPage ngDoCheck");
-  }
-  ngAfterContentChecked(): void {
-    console.log("ItemDetailPage ngAfterContentChecked");
-  }
-  ngAfterViewInit(): void {
-    console.log("ItemDetailPage ngAfterViewInit");
-  }
-  ngAfterViewChecked(): void {
-    console.log("ItemDetailPage ngAfterViewChecked");
-  }
-  ngOnDestroy(): void {
-    console.log("ItemDetailPage ngOnDestroy");
-  }
-
 
   doFavorite() {
     const { id: itemID, vote } = this.item;
