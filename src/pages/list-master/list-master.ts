@@ -1,6 +1,6 @@
 import { LoginPage } from './../login/login';
 import { MainPage } from './../index';
-import { Component, AfterContentInit, OnInit, AfterViewChecked, AfterContentChecked, OnChanges, DoCheck, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Item } from '../../models/item';
@@ -13,37 +13,9 @@ import { Subscription, Observable } from 'rxjs';
   selector: 'page-list-master',
   templateUrl: 'list-master.html'
 })
-export class ListMasterPage implements 
-OnChanges, OnInit, DoCheck,
-AfterContentInit, AfterContentChecked,
-AfterViewInit, AfterViewChecked,
-OnDestroy {
-
-  ngOnInit(): void {
-    console.log("ListMasterPage ngOnInit");
-  }
-  ngAfterContentInit(): void {
-    console.log("ListMasterPage ngAfterContentInit");
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("ListMasterPage  ngOnChanges");
-  }
-  ngDoCheck(): void {
-    console.log("ListMasterPage ngDoCheck");
-  }
-  ngAfterContentChecked(): void {
-    console.log("ListMasterPage ngAfterContentChecked");
-  }
-  ngAfterViewInit(): void {
-    console.log("ListMasterPage ngAfterViewInit");
-  }
-  ngAfterViewChecked(): void {
-    console.log("ListMasterPage ngAfterViewChecked");
-  }
-  ngOnDestroy(): void {
-    console.log("ListMasterPage ngOnDestroy");
-  }
+export class ListMasterPage {
   public currentItems: Item[];
+  public currentGroups: any[];
 
   private itemsObservable: Observable<Item[]>;
   private itemsObserver: Subscription;
