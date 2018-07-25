@@ -1,5 +1,5 @@
 import { switchMap } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, empty, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { Item } from '../../models/item';
@@ -10,7 +10,9 @@ import uuid from "uuid/v1";
 export class Items {
 
   private items$: Observable<any[]>;
+
   private name$: BehaviorSubject<string|null>;
+  private type$: BehaviorSubject<string|null>;
   private items: Item[] = [];
 
   public defaultItem: any = {
@@ -29,6 +31,7 @@ export class Items {
         "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Burt is a Bear.",
         "vote": 0,
+        "type": "animal"
       },
       {
         "id": uuid(),
@@ -36,6 +39,7 @@ export class Items {
         "profilePic": "assets/img/speakers/cheetah.jpg",
         "about": "Charlie is a Cheetah.",
         "vote": 1,
+        "type": "animal"
       },
       {
         "id": uuid(),
@@ -43,6 +47,7 @@ export class Items {
         "profilePic": "assets/img/speakers/duck.jpg",
         "about": "Donald is a Duck.",
         "vote": 6,
+        "type": "bird"
       },
       {
         "id": uuid(),
@@ -50,6 +55,7 @@ export class Items {
         "profilePic": "assets/img/speakers/eagle.jpg",
         "about": "Eva is an Eagle.",
         "vote": 0,
+        "type": "bird"
       },
       {
         "id": uuid(),
@@ -57,6 +63,7 @@ export class Items {
         "profilePic": "assets/img/speakers/elephant.jpg",
         "about": "Ellie is an Elephant.",
         "vote": 7,
+        "type": "animal"
       },
       {
         "id": uuid(),
@@ -64,6 +71,7 @@ export class Items {
         "profilePic": "assets/img/speakers/mouse.jpg",
         "about": "Molly is a Mouse.",
         "vote": 0,
+        "type": "animal"
       },
       {
         "id": uuid(),
@@ -71,6 +79,7 @@ export class Items {
         "profilePic": "assets/img/speakers/puppy.jpg",
         "about": "Paul is a Puppy.",
         "vote": 0,
+        "type": "animal"
       }
     ];
 
@@ -84,6 +93,22 @@ export class Items {
         name => this.query({ name })
       )
     );
+  }
+
+  groupBy(items):any {
+    let groups = {};
+    items.forEach((item) => {
+      let group = groups[item.type];
+      if (!group) {
+        group = {
+          type: item.type,
+          items: [],
+        };
+        groups[item.type] = group;
+      }
+      group.items.push(item);
+    })
+    return groups;
   }
 
   /**
