@@ -1,8 +1,8 @@
-import { DEFAULT } from './../../models/item';
-import { Component, AfterContentInit, OnInit, AfterViewChecked, AfterContentChecked, OnChanges, DoCheck, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Items } from '../../providers';
+import { DEFAULT } from 'models/item';
 
 @IonicPage()
 @Component({

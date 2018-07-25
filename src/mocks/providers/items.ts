@@ -1,5 +1,5 @@
 import { switchMap } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, empty, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { Item } from '../../models/item';
@@ -9,7 +9,9 @@ import { ITEMS } from '../data/items';
 export class Items {
 
   private items$: Observable<any[]>;
+
   private name$: BehaviorSubject<string|null>;
+  private type$: BehaviorSubject<string|null>;
   private items: Item[] = [];
 
   constructor() {
@@ -23,6 +25,22 @@ export class Items {
         name => this.query({ name })
       )
     );
+  }
+
+  groupBy(items):any {
+    let groups = {};
+    items.forEach((item) => {
+      let group = groups[item.type];
+      if (!group) {
+        group = {
+          type: item.type,
+          items: [],
+        };
+        groups[item.type] = group;
+      }
+      group.items.push(item);
+    })
+    return groups;
   }
 
   /**
